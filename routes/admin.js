@@ -5,14 +5,22 @@ const rootDir = require('../utils/path')
 
 const router = express.Router()
 
+const products = []
+
 router.get('/add-product', (req, res, next) => {
   console.log('In /add-product middleware')
-  res.sendFile(path.join(rootDir, 'views', 'add-product.html'))
+  // res.sendFile(path.join(rootDir, 'views', 'add-product.html'))
+  res.render('add-product', { docTitle: 'Add Product' })
 })
 
 router.post('/add-product', (req, res, next) => {
-  console.log(req.body)
+  const { title } = req.body
+
+  products.push({ title })
   res.redirect('/')
 })
 
-module.exports = router
+module.exports = {
+  routes: router,
+  products: products
+}
