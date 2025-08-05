@@ -22,7 +22,6 @@ const requestHandler = (req, res) => {
     const body = []
     req.on('data', (chunk) => {
       body.push(chunk)
-      console.log(chunk)
     })
     return req.on('end', () => {
       const parsedBody = Buffer.concat(body).toString()
