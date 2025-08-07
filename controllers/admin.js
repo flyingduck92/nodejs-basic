@@ -8,19 +8,19 @@ module.exports.getAddProduct = (req, res, next) => {
 }
 
 module.exports.postAddProduct = (req, res, next) => {
-  const { title } = req.body
+  const { title, imageUrl, price, description } = req.body
 
-  const product = new Product(title)
+  const product = new Product(title, imageUrl, price, description)
   product.save()
   res.redirect('/')
 }
 
 module.exports.getProducts = (req, res, next) => {
   Product.fetchAll(products => {
-    res.render('shop/product-list', {
+    res.render('admin/products', {
       products,
-      pageTitle: 'My Shop',
-      path: '/'
+      pageTitle: 'Admin Products',
+      path: '/admin/products'
     })
   })
 }
