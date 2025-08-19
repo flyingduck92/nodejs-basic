@@ -18,7 +18,8 @@ const getProductsFromFile = (cb) => {
 }
 
 class Product {
-  constructor(title, imageUrl, price, description) {
+  constructor(id, title, imageUrl, price, description) {
+    this.id = id
     this.title = title
     this.imageUrl = imageUrl
     this.price = price
@@ -27,15 +28,36 @@ class Product {
 
   save() {
     getProductsFromFile(products => {
-      products.push(this)
-      fs.writeFile(location, JSON.stringify(products), (err) => {
-        console.log(err)
-      })
+      // edit existing product
+      if (this.id) {
+        const existingProductIndex = products.findIndex(product => product.id == this.id)
+        const updatedProducts = [...products]
+        updatedProducts[existingProductIndex] = this
+        fs.writeFile(location, JSON.stringify(updatedProducts), (err) => {
+          console.log(err)
+        })
+      }
+      // add new product
+      else {
+        this.id = Math.floor(Math.random() * 10000)
+        products.push(this)
+        fs.writeFile(location, JSON.stringify(products), (err) => {
+          console.log(err)
+        })
+      }
+
     })
   }
 
   static async fetchAll(cb) {
     getProductsFromFile(cb)
+  }
+
+  static async fetchOneById(id, cb) {
+    getProductsFromFile(products => {
+      const product = products.find(p => p.id === id)
+      cb(product)
+    })
   }
 }
 

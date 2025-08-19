@@ -21,6 +21,11 @@
   "devDependencies": {
     "nodemon": "^3.1.10"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "data/*"
+    ]
+  },
   "dependencies": {
     "dotenv": "^17.2.1",
     "ejs": "^3.1.10",

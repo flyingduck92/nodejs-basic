@@ -8,7 +8,7 @@ dotenv.config()
 app.set('view engine', 'pug')
 app.set('views', 'views')
 
-const { routes: adminRoutes } = require('./routes/admin')
+const adminRoutes = require('./routes/admin')
 const shopRoutes = require('./routes/shop')
 const pageError = require('./controllers/pageError')
 
